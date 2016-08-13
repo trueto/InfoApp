@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/ssi-uploader.css"/>
+	</head>
+
+	<body id="container">
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">上传</h1>
+		</header>
+		<div class="mui-content">
+		    <input type="file" multiple id="ssi-upload"/>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/ssi-uploader.js"></script>
+		<script src="../js/config.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{
+					swipe:true
+				}
+			});
+			mui.plusReady(function () {
+				document.getElementById("container").addEventListener('swiperight',function () {
+					mui.back();
+				});
+			});
+			$('#ssi-upload').ssi_uploader({
+		      url:posturl.photoupload,
+		      maxFileSize:6,
+		      allowed:['jpg','gif','png','jpeg'],
+		      onUpload:function() {
+		        //上传成功的回调函
+		        mui.fire(plus.webview.getWebviewById('html/photo.html'),'reloadphoto',{});
+		        mui.back();
+		      }
+		    });
+		</script>
+	</body>
+
+</html>

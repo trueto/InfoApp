@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/hexagons.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/previewimage.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">搜索</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-input-row mui-search">
+			    <input type="search" class="mui-input-clear" placeholder="" id="search">
+			</div>
+			<div class="mui-content-padded" id="container">
+				<p style="text-align: center;">搜索待命中...</p>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{
+					swipe:true
+				}
+			});
+			mui.previewImage();
+			mui.plusReady(function () {
+				var container=document.getElementById("container");
+				var upload=document.getElementById("upload");
+				var search=document.getElementById("search");
+				var page=1,limit=5,searchValue='';
+				$('#search').on('input',function () {
+					searchValue=$('#search').val();
+					getPhoto(page,limit,searchValue);
+				});
+				container.addEventListener('swipeleft',function () {
+					//避免与预览图片的右滑事件冲突
+					if (localStorage.getItem('imgopen')!='1') {
+						if (page>1) {
+							page--;
+							mui.toast('第'+page+'页');
+							getPhoto(page,limit,searchValue);
+						}else{
+							mui.toast('第一页');
+						}
+					}
+				});
+				container.addEventListener('swiperight',function () {
+					var totalpage=localStorage.getItem('totalpage');
+					if (page>=totalpage) {
+						mui.toast('最后一页');
+					}else{
+						page++;
+						mui.toast('第'+page+'页');
+						getPhoto(page,limit,searchValue);
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

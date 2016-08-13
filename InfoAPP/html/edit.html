@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		.mui-input-group textarea
+		{
+		    margin-bottom: 0;
+		    border-bottom: 1px solid gainsboro;
+		    border-radius: 0;
+		    background-color: transparent;
+		    -webkit-box-shadow: none;
+		            box-shadow: none;
+		}
+		.mui-input-row label
+		{
+		    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+		    line-height: 1.1;
+		    float: left;
+		    width: 20%;
+		    text-align: center;
+		    padding: 11px 15px;
+		}
+		.mui-input-row label ~ input, .mui-input-row label ~ select, .mui-input-row label ~ textarea
+		{
+		    float: right;
+		    width: 80%;
+		    margin-bottom: 0;
+		    padding-left: 0;
+		    border: 0;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">记录</h1>
+		</header>
+		<div class="mui-content" id="container">
+			<form class="mui-input-group">
+			    <div class="mui-input-row">
+			        <label>秘钥</label>
+			        <input type="password" class="mui-input-password" placeholder="请输入token" id="token">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>心情</label>
+			        <select name="mood" id="mood">
+			        		<option value="-1">...请选择</option>
+			        		<option value="0">微笑</option>
+			        		<option value="1">呲牙</option>
+			        		<option value="2">惊讶</option>
+			        		<option value="3">哭泣</option>
+			        		<option value="4">色色</option>
+			        </select>
+			    </div>
+			    <div class="mui-input-row">
+			        <label>标题</label>
+			        <input type="text" class="mui-input-clear" placeholder="输入标题" id="title">
+			    </div>
+			 	<textarea name="content" rows="5" placeholder="请填写内容..." id="content">
+			 	</textarea>
+			 	<div class="mui-button-row">
+			        <button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" id="submit">添加</button>
+			        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" id="reset">重置</button>
+			    </div>
+			</form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{
+					swipe:true
+				}
+			});
+			mui.plusReady(function () {
+				$('#content').val('');
+				var submit=document.getElementById("submit"),
+					reset=document.getElementById("reset"),
+					container=document.getElementById("container");
+				submit.addEventListener('tap',function () {
+					var date=dateFormat(),
+						title=$('#title').val(),
+						token=$('#token').val(),
+						mood=$('#mood').val(),
+						content=$('#content').val();
+					if (token.length==0) {
+						mui.toast('token不能为空！');
+						return;
+					}
+					if (mood==-1) {
+						mui.toast('请选择。。。');
+						return;
+					}
+					if (title.length==0) {
+						mui.toast('标题不能为空！');
+						return;
+					}
+					if (content.length==0) {
+						mui.toast('内容不能为空！');
+						return;
+					}
+					$.ajax({
+						type:"post",
+						url:posturl.edit,
+						dataType:'json',
+						data:{
+							token:token,
+							title:title,
+							mood:mood,
+							date:date,
+							content:content
+						},
+						success:function (data) {
+							if (data==1) {
+								mui.toast('添加成功！');
+								mui.back();
+								resetInput();
+								mui.fire(plus.webview.getWebviewById('html/home_main.html'),'reloadnote',{});
+							}
+						},
+						error:function () {
+							mui.toast('后台出错了！');
+							mui.back();
+							resetInput();
+							mui.fire(plus.webview.getWebviewById('html/home_main.html'),'reloadnote',{});
+						}
+					});
+				});
+				reset.addEventListener('tap',function () {
+					resetInput();
+				});
+				function resetInput () {
+					$('#token').val('');
+					$('#mood').val(-1);
+					$('#title').val('');
+					$('#content').val('');
+				}
+				function dateFormat () {
+					var date =new Date(),y,m,d,h,i;
+					y=date.getFullYear();
+					m=date.getMonth()+1;
+					m=m >=10 ? m :('0'+m);
+					d=date.getDay();
+					d=d >=10 ? d : ('0'+d);
+					h=date.getHours();
+					h=h >=10 ? h : ('0'+h);
+					i=date.getMinutes();
+					i=i >=10 ? i : ('0'+i);
+					date =y+'-'+m+'-'+d+' '+h+':'+i;
+					return date;
+				}
+				container.addEventListener('swiperight',function () {
+					mui.back();
+				});
+			});
+		</script>
+	</body>
+</html>

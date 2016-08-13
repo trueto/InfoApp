@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/hexagons.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/previewimage.css"/>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-search mui-pull-left" id="search"></a>
+		    <h1 class="mui-title">摄影</h1>
+		    <a class="mui-icon mui-icon-camera mui-pull-right" id="upload"></a>
+		</header>
+		<div class="mui-content" id="container">
+			<br />
+		    <ul id="hexGrid">
+	            <li class="hex">
+	                <a class="hexIn" href="#">
+	                    <img src="../images/bee.jpg" data-preview-src="" data-preview-group="1" />
+	                    <h1>小蜜蜂</h1>
+	                    <p>在马鞭草上辛勤的采蜜，我偷拍它都没发现</p>
+	                </a>
+	            </li>
+    	       </ul>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+						swipe: true, //默认为true
+				}
+			});
+			mui.previewImage();
+			mui.plusReady(function () {
+				var container=document.getElementById("container");
+				var upload=document.getElementById("upload");
+				var search=document.getElementById("search");
+				var page=1,limit=5,searchValue='';
+				if (plus.os.name=='iOS') {
+					setTimeout(function () {
+						getPhoto(page,limit,searchValue);
+					},3000);
+				}else{
+					getPhoto(page,limit,searchValue);
+				}
+				container.addEventListener('swipedown',function () {
+					getPhoto(page,limit,searchValue);
+				});
+				container.addEventListener('swipeleft',function () {
+					//避免与预览图片的右滑事件冲突
+					if (localStorage.getItem('imgopen')!='1') {
+						if (page>1) {
+							page--;
+							mui.toast('第'+page+'页');
+							getPhoto(page,limit,searchValue);
+						}else{
+							mui.toast('第一页');
+						}
+					}
+				});
+				container.addEventListener('swiperight',function () {
+					var totalpage=localStorage.getItem('totalpage');
+					if (page>=totalpage) {
+						mui.toast('最后一页');
+					}else{
+						page++;
+						mui.toast('第'+page+'页');
+						getPhoto(page,limit,searchValue);
+					}
+				});
+				upload.addEventListener('tap',function () {
+					openW('upload','右滑可以返回哦！','zoom-fade-out');
+				});
+				search.addEventListener('tap',function () {
+					openW('searchphoto','左右滑动翻页哦！','fade-in');
+				});
+				window.addEventListener('reloadphoto',function () {
+					mui.toast('刷新页面');
+					plus.webview.currentWebview().reload();
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,31 @@
+body{font-family:Lato,'Open Sans', sans-sarif; font-size:16px; }
+*{margin: 0; padding: 0; box-sizing: border-box;}
+.container{margin: 20% auto 0 auto;}
+/*= common css to all effects =*/
+.single-member{margin: 0 2%; background-color: #fff; text-align: center; position: relative;}
+.member-image img{vertical-align: middle;}
+h3 {font-size: 24px; font-weight: normal; margin: 10px 0 3px; text-transform: uppercase;}
+h5 {font-size: 16px; font-weight: 300; margin: 0 0 10px; line-height: 22px;}
+p {font-size: 14px; font-weight: 300; line-height: 22px; padding: 0 10px; margin-bottom: 10px;text-align:justify;}
+hr{border: 0;}
+.social-touch a{display: inline-block;color: white; width: 27px; height: 26px; vertical-align: middle; margin: 0 5px;}
+.social-touch a:hover{color: #EC412D; transition: 0.5s;}
+
+/*= effect css =*/
+.effect{border-radius: 5px 5px 0 0; padding-bottom: 40px;}
+.effect .member-image {border: 2px solid #fff; border-radius: 60px 0; display: inline-block; margin-top: -72px; overflow: hidden; transition: 0.3s;}
+.effect .social-touch{background-color: #39B4FC; position: absolute; left: 0; bottom: 0; height: 2px; overflow: hidden; padding: 2px 0 0; width: 100%; transition: 0.3s;}
+.effect .member-image img{transition: 0.3s; border-radius: 60px 0;}
+.effect:hover .member-image{border-color:#EC412D; transition: 0.3s; border-radius: 50%;}
+.effect:hover .social-touch{padding: 6px 0; height: 38px; transition: 0.5s;}
+/*= effect-1 css end =*/
+
+/*= Media Query 
+=============== */
+/*@media only screen and (max-width: 980px){
+	.row{width: 100%; margin: 110px 0;}
+	.team-members{text-align: center;}
+	.single-member{float: none; display: inline-block; vertical-align: bottom;}
+}*/
+/*= Media Query End
+=================== */

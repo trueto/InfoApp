@@ -1,0 +1,173 @@
+{
+  "main.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "html/home_main.html",
+      "html/photo.html",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "html/photo.html",
+      "html/resume.html",
+      "html/home_main.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/sinaweibo.png",
+      "images/weixin.png",
+      "images/qq.png",
+      "js/config.js",
+      "images/avtar.jpg",
+      "js/jquery.min.js"
+    ],
+    "refer": [
+      "main.html"
+    ]
+  },
+  "html/home_main.html": {
+    "resources": [
+      "html/home_sub.html",
+      "js/config.js",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "html/home_sub.html",
+      "html/edit.html",
+      "html/search.html",
+      "html/searchnote.html"
+    ]
+  },
+  "html/photo.html": {
+    "refer": [
+      "html/upload.html",
+      "html/search.html",
+      "html/searchphoto.html"
+    ],
+    "resources": [
+      "images/avtar.jpg",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/hexagons.css",
+      "js/mui.zoom.js",
+      "css/previewimage.css",
+      "js/mui.previewimage.js",
+      "images/bee.jpg",
+      "js/config.js",
+      "js/jquery.min.js"
+    ]
+  },
+  "html/upload.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery.min.js",
+      "css/ssi-uploader.css",
+      "js/ssi-uploader.js"
+    ]
+  },
+  "html/resume.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/resume.css",
+      "images/avtar.jpg",
+      "fonts/mui.ttf",
+      "js/config.js",
+      "js/jquery.min.js"
+    ],
+    "refer": [
+      "html/chat.html",
+      "html/show.html"
+    ]
+  },
+  "html/edit.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "libs/wangEditor-mobile/css/wangEditor-mobile.min.css",
+      "libs/wangEditor-mobile/js/wangEditor-mobile.js",
+      "libs/wangEditor-mobile/js/lib/zepto.js",
+      "libs/wangEditor-mobile/js/lib/zepto.touch.js"
+    ]
+  },
+  "html/chat.html": {
+    "resources": [
+      "js/mui.imageViewer.js",
+      "css/app.css",
+      "css/mui.imageviewer.css",
+      "js/arttmpl.js",
+      "images/avtar.jpg",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/socket.io.js",
+      "js/config.js"
+    ]
+  },
+  "html/search.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "html/home_sub.html": {
+    "resources": [
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/config.js"
+    ],
+    "refer": [
+      "html/detail.html"
+    ]
+  },
+  "html/show.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/jquery.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "html/detail.html": {
+    "resources": [
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "html/show.html"
+    ]
+  },
+  "html/searchnote.html": {
+    "resources": [
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/config.js"
+    ]
+  },
+  "html/searchphoto.html": {
+    "resources": [
+      "js/mui.zoom.js",
+      "css/previewimage.css",
+      "js/mui.previewimage.js",
+      "css/hexagons.css"
+    ]
+  }
+}

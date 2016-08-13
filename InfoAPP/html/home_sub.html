@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>note list</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					$('#list').html('');
+					page=1;
+					getNote(page,limit,'');
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().refresh(true);
+					isRefresh=true;
+				}, 1500);
+			}
+			var page=1,limit=15,searchValue='',isRefresh=false;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					if (isRefresh) {
+						$('#list').html('');
+						isRefresh=false;
+					}
+					getNote(page,limit,searchValue);
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(page>=localStorage.getItem('notePage')); //参数为true代表没有更多数据了。
+					if (page>=localStorage.getItem('notePage')) {
+						page=localStorage.getItem('notePage');
+					}else{
+						page++;
+					}
+				}, 1500);
+			}
+			mui.plusReady(function() {
+				if (plus.os.name=='iOS') {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				}else{
+					mui.toast('下拉加载内容！');
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				}
+			});
+		</script>
+	</body>
+
+</html>

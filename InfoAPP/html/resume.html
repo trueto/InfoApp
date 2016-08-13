@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/resume.css"/>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <h1 class="mui-title">简历</h1>
+		</header>
+		<div class="mui-content">
+			<div class="container">
+				<div class="single-member effect" id="resume">
+		            	<div class="member-image">
+	                		<img src="../images/avtar.jpg" alt="trueto">
+	                </div>
+	                <div class="member-info">
+	                    	<div id="ahanlder">
+		                	<h3>杨飞洪</h3>
+	                    <h5>前端开发工程师</h5>
+	                    <p>浙江大学本科，熟悉<a href="https://nodejs.org/en/">nodejs</a>、<a href="http://php.net/">php</a>、<a href="https://www.python.org/">python</a>、<a href="https://java.com/zh_CN/">java</a>，
+	                    	熟练使用<a href="https://expressjs.com/">express</a>、<a href="https://thinkjs.org/">thinkjs</a>、<a href="http://www.thinkphp.cn/">thinkphp</a>、<a href="http://www.jfinal.com/">jfinal</a>和<a href="https://www.djangoproject.com/">django</a>框架；
+	                    	熟悉<a href="http://dev.dcloud.net.cn/mui/">mui</a>、<a href="http://www.bootcss.com">bootstrap</a>、<a href="https://jquery.com/">jquery</a>和<a href="https://facebook.github.io/react/">reactjs</a>前端框架；
+	                    	熟练<a href="http://www.dcloud.io/">H5APP</a>开发实现移动端版本最大化兼容与界面统一;喜欢编程和摄影，偶尔也打打球！
+	                     </p>
+	                    <hr />个人主页：<a href="http://job.trueto.cn">http://job.trueto.cn</a>
+	                    	<br />
+	                    gitHub: <a href="https://github.com/trueto">https://github.com/trueto</a>
+	                    	</div>
+	                    <div class="social-touch">
+	                    		<a class="mui-icon mui-icon-email-filled" href="mailto:3130103836@zju.edu.cn?subject=trueto,你好！"></a>
+	                        <a class="mui-icon mui-icon-phone-filled" href="sms:18868150826"></a>
+	                        <a class="mui-icon mui-icon-weixin" id="wechat"></a>
+	                    </div>
+	                </div>
+	            </div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function () {
+				getResume();
+				var height=window.innerHeight;
+				if (plus.os.name=='iOS') {
+					height=window.innerHeight*272/596+'px';
+				}else{
+					height=window.innerHeight*219/517+'px';
+				}
+				$('.member-image img').css('max-height',height);
+				function getResume () {
+					$.ajax({
+						type:"post",
+						url:posturl.resume,
+						dataType:'json',
+						async:false,
+						data:{},
+						success:function (data) {
+							$('#resume').html('');
+							var html='<div class="member-image"><img src='+data.avatar+' alt="trueto"></div>'+
+	                					 '<div class="member-info"><div id="ahanlder"><h3>'+data.name+'</h3>'+
+	                    				 '<h5>'+data.title+'</h5>'+data.content+'</div><div class="social-touch">'+
+			                    		 '<a class="mui-icon mui-icon-email-filled" href="mailto:3130103836@zju.edu.cn?subject=trueto,你好！"></a>'+
+			                         '<a class="mui-icon mui-icon-phone-filled" href="sms:18868150826"></a>'+
+			                         '<a class="mui-icon mui-icon-weixin" id="wechat"></a></div></div>';
+							$('#resume').html(html);
+						},
+						error:function () {
+							mui.toast('error');
+						}
+					});
+				};
+				document.getElementById("wechat").addEventListener('tap',function () {
+//					openW('chat','右滑可以返回哦！','pop-in');
+					if (plus.os.name=='iOS') {
+						plus.runtime.launchApplication({
+                            action: "mqq://im/chat?chat_type=wpa&uin=1509359472&version=1&src_type=web"
+                        }, function(e) {
+                            plus.nativeUI.confirm("检查到您未安装qq，请先到appstore搜索下载？", function(i) {
+                                if (i.index == 0) {
+                                    iosAppstore("itunes.apple.com/cn/app/mqq/");
+                                }
+                            });
+                        });
+					}else if (plus.os.name=='Android') {
+						var main = plus.android.runtimeMainActivity();
+						var packageManager = main.getPackageManager();
+						var PackageManager = plus.android.importClass(packageManager);
+						var pname="com.tencent.mobileqq";
+						try {
+							if (packageManager.getPackageInfo(pname, PackageManager.GET_ACTIVITIES)) {
+								var Intent = plus.android.importClass('android.content.Intent');
+			                    var Uri = plus.android.importClass('android.net.Uri');
+			                    var intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=1509359472"));
+			                    main.startActivity(intent);
+							}
+						} catch (e) {
+							plus.nativeUI.confirm("检查到您未安装QQ，请先到应用商店搜索下载？", function(i) {
+                                if (i.index == 0) {
+                                    androidMarket("com.tencent.mobileqq");
+                                }
+                            });
+						}
+					}
+				});
+				$('#ahanlder a').on('click',function (e) {
+					e.preventDefault();
+					mui.openWindow({
+						url:'show.html',
+						id:'show',
+						extras:{
+							url:$(this).attr('href')
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>
